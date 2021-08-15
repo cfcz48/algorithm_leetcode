@@ -5,10 +5,8 @@
 using namespace std;
 
 #pragma region week_1  // 第一周
-
 vector<int> twoSum(vector<int>& nums, int target);
 void rotate(vector<int>& nums, int k);
-
 #pragma endregion
 
 #pragma region week_1  // 第二周
