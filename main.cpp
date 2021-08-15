@@ -11,10 +11,16 @@ void rotate(vector<int>& nums, int k);
 
 #pragma endregion
 
+#pragma region week_1  // 第二周
+bool isAnagram(string s, string t);
+vector<int> topKFrequent(vector<int>& nums, int k);
+#pragma endregion
+
+
 int main() {
 //    int nums1[] = [2,7,11,15];
-    vector<int> nums{-1,-100,3,99};
-     rotate(nums,2);
+    vector<int> nums{1,1,1,2,2,3};
+    topKFrequent(nums,2);
     return 0;
 }
 #pragma region week_1 // 第一周
@@ -40,4 +46,45 @@ void rotate(vector<int>& nums, int k) {
     }
     nums.assign(rs.begin(),rs.end());
 }
+#pragma endregion
+
+#pragma region week_2 // 第二周
+
+// 242 有效的字母异位词 https://leetcode-cn.com/problems/valid-anagram/description/
+// 若 s 和 t 中每个字符出现的次数都相同，则称 s 和 t 互为字母异位词。
+// 等价于s和t排序后相等
+bool isAnagram(string s, string t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    sort(s.begin(), s.end());
+    sort(t.begin(), t.end());
+    return s == t;
+}
+
+// 347. 前 K 个高频元素
+struct CmpByValue {
+    bool operator()(const pair<int, int>& lhs, const pair<int, int>& rhs) {
+        return lhs.second > rhs.second;
+    }
+};
+
+vector<int> topKFrequent(vector<int>& nums, int k) {
+    map<int,int> nums_count;
+    for (int i = 0; i < nums.size(); ++i) {
+        int key = nums[i];
+        int vaule = nums_count[key];
+        ++vaule;
+        nums_count[key] = vaule;
+    }
+    vector<pair<int, int>> nums_count_vec(nums_count.begin(), nums_count.end());
+    sort(nums_count_vec.begin(), nums_count_vec.end(), CmpByValue());
+    vector<int> res(k);
+    for (int i = 0; i < k; ++i) {
+        res[i] = nums_count_vec[i].first;
+    }
+    return res;
+}
+
+
 #pragma endregion
